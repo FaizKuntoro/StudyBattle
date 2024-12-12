@@ -1,0 +1,122 @@
+2024-12-01 00:31:31 UTC
+Windows-10-10.0.22631
+Ren'Py 8.3.2.24090901
+
+Early init took 0.12s
+Loading error handling took 0.05s
+Loading script took 0.39s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.19s
+Loading analysis data took 0.06s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.07s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\LENOVO\\AppData\\Roaming/RenPy/backups\\Study Battle Alpha':
+Dump and make backups took 0.33s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.06s
+DPI scale factor: 1.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: b"Couldn't load nvlib." (can be ignored)
+Creating interface object took 0.11s
+Cleaning stores took 0.00s
+Init translation took 0.16s
+Build styles took 0.00s
+Load screen analysis took 0.02s
+Analyze screens took 0.02s
+Save screen analysis took 0.06s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.07s
+Save bytecode. took 0.04s
+Running _start took 0.00s
+Interface start took 0.57s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'ATI Technologies Inc.'"
+Renderer: b'AMD Radeon(TM) Graphics'
+Version: b'4.6.0 Compatibility Profile Context 23.10.24.02.230811'
+Display Info: None
+Screen sizes: virtual=(1280, 720) physical=(1866, 1050) drawable=(1866, 1050)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 129, in script call
+    call battle from _call_battle
+  File "game/battle.rpy", line 482, in script
+    $renpy.pause(1.0,hard=True)
+  File "D:\renpy-8.3.2-sdk\renpy\ast.py", line 821, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\renpy-8.3.2-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/battle.rpy", line 482, in <module>
+    $renpy.pause(1.0,hard=True)
+  File "D:\renpy-8.3.2-sdk\renpy\exports\statementexports.py", line 194, in pause
+    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
+  File "D:\renpy-8.3.2-sdk\renpy\ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "D:\renpy-8.3.2-sdk\renpy\display\core.py", line 2215, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "D:\renpy-8.3.2-sdk\renpy\display\core.py", line 2745, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy-8.3.2-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-8.3.2-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-8.3.2-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy-8.3.2-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "D:\renpy-8.3.2-sdk\renpy\display\core.py", line 2745, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy-8.3.2-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "D:\renpy-8.3.2-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/battle.rpy", line 306, in execute
+    screen healths:
+  File "game/battle.rpy", line 306, in execute
+    screen healths:
+  File "game/battle.rpy", line 307, in execute
+    frame at alpha_dissolve:
+  File "game/battle.rpy", line 312, in execute
+    text "{i}[user] & [sib]{/i}" xalign 0.135 yalign 0.22 font "fonts/rexlia rg.otf"
+  File "D:\renpy-8.3.2-sdk\renpy\text\text.py", line 2093, in _scope
+    return self.set_text(self.text_parameter, scope, self.substitute, update)
+  File "D:\renpy-8.3.2-sdk\renpy\text\text.py", line 2132, in set_text
+    i, did_sub = renpy.substitutions.substitute(i, scope, substitute) # type: ignore
+  File "D:\renpy-8.3.2-sdk\renpy\substitutions.py", line 373, in substitute
+    s = interpolate(s, variables) # type: ignore
+  File "D:\renpy-8.3.2-sdk\renpy\substitutions.py", line 86, in interpolate
+    raise e
+  File "D:\renpy-8.3.2-sdk\renpy\substitutions.py", line 78, in interpolate
+    value = renpy.python.py_eval(code, {}, scope)
+  File "D:\renpy-8.3.2-sdk\renpy\python.py", line 1209, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+  File "D:\renpy-8.3.2-sdk\renpy\python.py", line 1202, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "<none>", line 1, in <module>
+  File "D:\renpy-8.3.2-sdk\renpy\substitutions.py", line 313, in __getitem__
+    raise NameError("Name '{}' is not defined.".format(key))
+NameError: Name 'user' is not defined.
+
+While running game code:
+  File "game/script.rpy", line 129, in script call
+    call battle from _call_battle
+  File "game/battle.rpy", line 482, in script
+    $renpy.pause(1.0,hard=True)
+  File "game/battle.rpy", line 482, in <module>
+    $renpy.pause(1.0,hard=True)
+  File "game/battle.rpy", line 306, in execute
+    screen healths:
+  File "game/battle.rpy", line 306, in execute
+    screen healths:
+  File "game/battle.rpy", line 307, in execute
+    frame at alpha_dissolve:
+  File "game/battle.rpy", line 312, in execute
+    text "{i}[user] & [sib]{/i}" xalign 0.135 yalign 0.22 font "fonts/rexlia rg.otf"
+NameError: Name 'user' is not defined.
