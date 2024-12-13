@@ -1,0 +1,30 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 612, in script call
+    call battle from _call_battel
+  File "game/battle.rpy", line 425, in script
+    $ asks = quizquestion["question"]
+  File "game/battle.rpy", line 425, in <module>
+    $ asks = quizquestion["question"]
+TypeError: 'int' object is not subscriptable
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "game/script.rpy", line 612, in script call
+    call battle from _call_battel
+  File "game/battle.rpy", line 425, in script
+    $ asks = quizquestion["question"]
+  File "C:\Users\faizk\Downloads\renpy-8.3.4-sdk\renpy\ast.py", line 827, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\faizk\Downloads\renpy-8.3.4-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/battle.rpy", line 425, in <module>
+    $ asks = quizquestion["question"]
+TypeError: 'int' object is not subscriptable
+
+Windows-10-10.0.22631 AMD64
+Ren'Py 8.3.4.24120703
+Study Battle 1.0
+Fri Dec 13 09:46:51 2024

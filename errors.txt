@@ -1,0 +1,12 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+The label trivia is defined twice, at File "game/battle.rpy", line 423:
+label trivia:
+and File "game/trivia.rpy", line 79:
+label trivia:
+
+
+Ren'Py Version: Ren'Py 8.3.4.24120703
+Fri Dec 13 09:46:16 2024
