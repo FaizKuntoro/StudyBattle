@@ -27,7 +27,7 @@ image user sad animated:
 image user hurt = "Character/Arisa/sedih3.png"
 image user attack = "Character/Arisa/senang3.png"
 image user biasa = "Character/Arisa/datar3.png"
-image user defense = "Character/Arisa/gugup3.png"
+image user defense = "Character/Arisa/gugup3.png"  
 image user senang = "Character/Arisa/senang1.png"
 image user sedih = "Character/Arisa/sedih1.png"
 
@@ -37,6 +37,8 @@ image tbx c attack = "Character/Cakra/marah.png"
 image tbx c defense = "Character/Cakra/hah.png"
 image tbx c marah = "Character/Cakra/marah.png"
 image tbx c senang = "Character/Cakra/senang.png"
+
+image winslose = "winlose.png"
 
 #style
 style move_button:
@@ -62,9 +64,6 @@ transform alpha_dissolve:
     on hide:
         linear 0.5 alpha 0
     
-transform charKiri:
-    xalign 0.85
-    yalign 0.1
 
 #Stats
 #Experience
@@ -124,13 +123,13 @@ define dummy = False #Question dummy
 define canAttack = False
 default quizquestion = 0
 default z = 0
-default asks = ""
-default answers = ""
-default corrects = ""
-default answers1 = ""
-default answers2 = ""
-default answers3 = ""
-default answers4 = ""
+default asks = "berapa 2 + 17"
+default answers = "19"
+default corrects = "19"
+default answers1 = "1"
+default answers2 = "2"
+default answers3 = "15"
+default answers4 = "19"
 default answercheck = ""
 
 define movename = ""
@@ -212,7 +211,7 @@ $ timer_jump = 'checkquiz1'
 screen countdown:
     # text "Time Limit" xalign 0.5 yalign 0.76 style ("black_font") at alpha_dissolve
     timer 0.1 repeat True action If(time > 0, true=SetVariable('time', time - 1), false=[Hide('countdown'), Jump(timer_jump)])
-    bar value time range timer_range xalign 0.5 yalign 0.81 xmaximum 600 at alpha_dissolve:
+    bar value time range timer_range xalign 0.5 yalign 1 xmaximum 600 at alpha_dissolve:
         left_bar Frame("images/Bar/timepenuh.png") right_bar Frame("images/Bar/timekosong.png")
 
 
@@ -224,6 +223,7 @@ screen hpbar:
         xalign 0.15 yalign 0.08 xmaximum 500 left_bar Frame("images/Bar/hppenuh.png") right_bar Frame("images/Bar/hpkosong.png")
 
     text "{b}HP{/b}" xalign 0.9185 yalign 0.08 style ("black_font") at alpha_dissolve
+    text "[enemycurhp]/[enemymaxhp]" xalign 0.66 yalign 0.12 style ("black_font") size 27 at alpha_dissolve
     bar value AnimatedValue(enemycurhp, range=enemymaxhp) at alpha_dissolve:
         xalign 0.85 yalign 0.08 xmaximum 500 left_bar Frame("images/Bar/hppenuh.png") right_bar Frame("images/Bar/hpkosong.png")
 
@@ -233,6 +233,16 @@ screen menu_frame:
         background "#00000099" 
         xalign 1.0 yalign 1.0
         
+
+screen result_screen(result_text):
+    # Display the result background image
+    add "winlose.png"
+
+    # Overlay the result text (e.g., "You Win" or "You Lose")
+    text "[result_text]" xalign 0.5 yalign 0.6 size 64 color "#000000" font "Font/Lato-Regular.ttf" bold True
+
+    # Display an OK button to continue
+    textbutton "OK" action Return() xalign 0.5 yalign 0.8
 
 #Screen Health
 screen healths:
@@ -396,8 +406,10 @@ label battle:
         yalign 1.0 #15
         zoom 0.4
 
-    show user biasa at charKiri:
+    show user biasa :
         zoom 0.4
+        xalign 0.15
+        yalign 1.0
 
     
     with moveinleft
@@ -409,8 +421,6 @@ label battle:
 #Attack Menu
 label attackmove:
     window hide dissolve
-    call moveinit from _call_moveinit_1
-    call moveElement from _call_moveElement_1
     show screen moves
     $renpy.pause(None,hard=True)
 
@@ -421,21 +431,12 @@ label defensemove:
 
 #Trivia gui
 label trivia1:
-    # Get the question and answers from the Triv dictionary
-    $ quizquestion = Triv
-    $ asks = quizquestion["question"]
-    $ answers = quizquestion["answer"]
-    $ corrects = quizquestion["correct"]
-    
-    # Shuffle the answers
-    $ renpy.random.shuffle(answers) 
-
-    # Assign shuffled answers to variables
-    $ answers1 = answers[0]
-    $ answers2 = answers[1]
-    $ answers3 = answers[2]
-    $ answers4 = answers[3]
-    $ answercheck = ""
+    # Ensure Triv is a dictionary and contains valid keys
+    $ time = 200
+    $ timer_range = 200
+    $ timer_jump = 'checkquiz1'
+    show screen menu_frame
+    show screen countdown
 
     # Set colors based on which answer is correct
     if answers1 == corrects:
@@ -474,6 +475,7 @@ label trivia1:
         "[answers4]":
             $ answercheck = answers4
             jump checkquiz1
+
 
 #Answer check
 label checkquiz1:
@@ -552,19 +554,6 @@ label checkquiz2:
 
     jump attack
 
-
-
-
-label critrate: #calculates crit
-    $crt = renpy.random.randint(1, 20) # 5% Crit rate
-
-    if crt == 5:
-        $crit = True
-    else:
-        $crit = False
-
-    return
-
 label attack: #damaging part
     window show dissolve
     if turn == 1: #player turn
@@ -587,29 +576,26 @@ label attack: #damaging part
             show tbx c biasa
             show user biasa
 
-
-    elif turn == 2: #enemy turn
+    elif turn == 2:  # enemy turn
         if defe != "None":
             "Kamu menggunakan perisai [defe]."
         "Time Bandit menggunakan serangan [atk]."
 
         $dmgto = enemyatk + movedmg - playerdef
-        $dmgto = int(dmgto)
-        $playercurhp -= dmgto
+        $dmgto = int(dmgto)  # Ensure integer value for damage
+        $playercurhp -= dmgto  # Decrease player's health
 
-        if playercurhp <= 0:
+        if playercurhp <= 0:  # Ensure player health doesn't go below 0
             $playercurhp = 0
 
         $renpy.restart_interaction()
 
-        #play sound lasersfx
-        show tbx c attack 
-        $renpy.pause(0.2,hard=True)
+        # play sound lasersfx (add your sound effect code here if needed)
+        show tbx c attack
+        $renpy.pause(0.2, hard=True)
         show user hit animated
-        $renpy.pause(1.8,hard=True)
-        show tbx c biasa
+        $renpy.pause(1.8, hard=True)
         show user biasa
-    
 
     $movedmg = 0 #reset the move dmg
     $canAttack = False #reset
@@ -647,8 +633,12 @@ label attack: #damaging part
             jump mapStart
 
     elif enemycurhp <= 0:
+        $ result_text = "You Win" 
         show user senang
         show tbx c marah
+        call screen result_screen(result_text)
+
+        
         
         "Kamu menang! Time Bandit berhasil dikalahkan."
         
@@ -656,10 +646,14 @@ label attack: #damaging part
         $renpy.restart_interaction()
         $renpy.pause(2.0,hard=True)
 
+       
+       
         $Hide("hpbar", transition=Dissolve(1.0))()
         $Hide("healths", transition=Dissolve(1.0))()
         
         call resetAll from _call_resetAll_1
+
+       
 
         stop music fadeout 2
         scene black with fade
@@ -680,10 +674,10 @@ label attack: #damaging part
             jump attackmove
 
         elif turn == 2:
-            show user biasa at charKiri 
+            show user biasa
             
             with move
-            show user diam biasa
+            show user biasa
             with dissolve
 
             jump defensemove

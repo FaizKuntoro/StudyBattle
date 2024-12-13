@@ -2,11 +2,9 @@
 errors listed below, and try again.
 
 
-The label trivia is defined twice, at File "game/battle.rpy", line 423:
-label trivia:
-and File "game/trivia.rpy", line 79:
-label trivia:
-
+File "game/battle.rpy", line 636: if statement expects a non-empty block.
+    if enemycurhp <= 0:
+                       ^
 
 Ren'Py Version: Ren'Py 8.3.4.24120703
-Fri Dec 13 09:46:16 2024
+Fri Dec 13 14:45:19 2024
