@@ -236,10 +236,10 @@ screen menu_frame:
 
 screen result_screen(result_text):
     # Display the result background image
-    add "winlose.png"
+    add "winlose.png" zoom 2 xalign 0.5 yalign 0.5
 
     # Overlay the result text (e.g., "You Win" or "You Lose")
-    text "[result_text]" xalign 0.5 yalign 0.6 size 64 color "#000000" font "Font/Lato-Regular.ttf" bold True
+    text "[result_text]" xalign 0.5 yalign 0.45 size 64 color "#000000" font "Font/Lato-Regular.ttf" bold True
 
     # Display an OK button to continue
     textbutton "OK" action Return() xalign 0.5 yalign 0.8
@@ -614,6 +614,7 @@ label attack: #damaging part
 
         $Hide("hpbar", transition=Dissolve(1.0))()
         $Hide("healths", transition=Dissolve(1.0))()
+        $Hide("menu", transition=Dissolve(1.0))()
 
         $playercurhp = playermaxhp
         $enemycurhp = enemymaxhp
@@ -636,7 +637,9 @@ label attack: #damaging part
         $ result_text = "You Win" 
         show user senang
         show tbx c marah
+        window hide dissolve
         call screen result_screen(result_text)
+        hide screen moves
 
         
         
